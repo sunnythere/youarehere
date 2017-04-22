@@ -1,0 +1,18 @@
+.blueYellow {
+  background: linear-gradient(12deg,  rgb(1, 13, 17), rgb(20, 102, 128), rgb(82, 196, 244), rgb(253, 253, 194) );
+}
+.yellowBlue {
+  background: linear-gradient(12deg, rgb(253, 253, 194), rgb(82, 196, 244), rgb(20, 102, 128), rgb(1, 13, 17));
+}
+.darkBlue {
+  background: linear-gradient(12deg, rgb(1, 13, 17), rgb(6, 90, 116), rgb(57, 135, 169));
+}
+.darkBlueRev {
+  background: linear-gradient(12deg, rgb(57, 135, 169), rgb(6, 90, 116), rgb(1, 13, 17));
+}
+.pinkYellow {
+  background: linear-gradient(12deg, rgb(252, 252, 219), rgb(243, 222, 154), rgb(255, 204, 135), rgb(247, 157, 157) 90%);
+}
+.yellowPink {
+  background: linear-gradient(12deg, rgb(247, 157, 157), rgb(255, 204, 135), rgb(243, 222, 154), rgb(252, 252, 219) );
+}
