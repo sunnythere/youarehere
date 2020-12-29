@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { randomInt } from '../random'
-
+import meow from '../meow.json';
+import "../style/main.scss";
 
 export default class Build extends Component {
 
@@ -10,13 +11,16 @@ export default class Build extends Component {
       showMsg0: false,
       showMsg1: false,
       showInfo: false,
+      buildMove: false,
       catSays: null,
       showContextMenu: false,
+      innerHeight: 0,
+      innerWidth: 0,
       build2position: '-2000px',
       theTime: '',
       timeOffSet: 0,
-      bg: 'buildBG blueYellow',
-      textClass: 'text',
+      bg: '',
+      textClass: '',
       touches: [],
       touchLength: 0
     }
@@ -39,58 +43,30 @@ export default class Build extends Component {
     this.setBackground(this.props.sunPhase)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.sunPhase !== this.props.sunPhase) {
-      this.setBackground(nextProps.sunPhase)
+  componentDidUpdate(prevProps) {
+    if (prevProps.sunPhase !== this.props.sunPhase) {
+      this.setBackground(this.props.sunPhase)
     }
   }
 
   checkViewport() {
     let position = (-(window.innerHeight * 0.5)  - (window.pageYOffset * 0.5)) + "" + "px"
-    this.setState({ build2position: position })
+    //this.setState({ build2position: position })
+    this.setState({
+      innerHeight: window.innerHeight,
+      innerWidth: window.innerWidth
+    })
   }
 
   handleContextMenu(evt) {
     evt.preventDefault()
-
-    let meow;
-    switch (randomInt(9)) {
-      case 1:
-        meow = "meow"
-        break;
-      case 2:
-        meow = "oh, hey.  funny seeing you here."
-        break;
-      case 3:
-        meow = "purrrrr"
-        break;
-      case 4:
-        meow = "hey hey"
-        break;
-      case 5:
-        meow = "I'm a css keyframe animation using a tiny sprite, with onContextMenu/onTouchStart/onTouchEnd functions."
-        break;
-      case 6:
-        meow = "hello"
-        break;
-      case 7:
-        meow = "hey there."
-        break;
-      case 8:
-        meow = "how YOU doin?"
-        break;
-      case 9:
-        meow = "mew"
-        break;
-      default:
-        meow = "mrrrreow"
-        break;
-    }
+    const num = meow.length;
+    const randomIdx = randomInt(num);
 
     this.setState({
       showContextMenu: true,
-      catSays: meow
-    })
+      catSays: meow[randomIdx],
+    });
 
     document.body.addEventListener('click', this.contextMenuClose, false)
     document.body.addEventListener('touchend', this.contextMenuClose, false)
@@ -101,50 +77,49 @@ export default class Build extends Component {
     this.setState({
       showContextMenu: false
     })
-    document.body.removeEventListener('click', this.contextMenuClose, false)
-    document.body.removeEventListener('touchend', this.contextMenuClose, false)
+    document.body.removeEventListener('click', this.contextMenuClose)
+    document.body.removeEventListener('touchend', this.contextMenuClose)
   }
 
   setBackground(sunPhase) {
-      console.log('setBackground', sunPhase)
-      let bground = 'buildBG'
-      let textClass = 'text'
-      switch (sunPhase) {
-        case 'astronomical_twilight_begin':
-          bground += ' yellowBlue'
-          break;
-        case 'nautical_twilight_begin':
-          bground += ' yellowBlue'
-          break;
-        case 'civil_twilight_begin':
-          bground += ' yellowPink'
-          break;
-        case 'sunrise':
-          bground += ' blueYellow'
-          break;
-        case 'sunset':
-          bground += ' pinkYellow'
-          break;
-        case 'civil_twilight_end':
-          bground += ' darkBlue'
-          textClass += ' white'
-          break;
-        case 'nautical_twilight_end':
-          bground += ' darkBlue'
-          textClass += ' white'
-          break;
-        case 'astronomical_twilight_end':
-          bground += ' darkBlueRev'
-          textClass += ' white'
-          break;
-        default:
-          bground += ' blueYellow'
-          break;
-      }
-      this.setState({
-        bg: bground,
-        textClass: textClass
-      })
+    let bground = 'buildBG'
+    let textClass = 'text'
+    switch (sunPhase) {
+      case 'astronomical_twilight_begin':
+        bground += ' yellowBlue'
+        break;
+      case 'nautical_twilight_begin':
+        bground += ' yellowBlue'
+        break;
+      case 'civil_twilight_begin':
+        bground += ' yellowPink'
+        break;
+      case 'sunrise':
+        bground += ' blueYellow'
+        break;
+      case 'sunset':
+        bground += ' pinkYellow'
+        break;
+      case 'civil_twilight_end':
+        bground += ' darkBlue'
+        textClass += ' white'
+        break;
+      case 'nautical_twilight_end':
+        bground += ' darkBlue'
+        textClass += ' white'
+        break;
+      case 'astronomical_twilight_end':
+        bground += ' darkBlueRev'
+        textClass += ' white'
+        break;
+      default:
+        bground += ' blueYellow'
+        break;
+    }
+    this.setState({
+      bg: bground,
+      textClass: textClass
+    });
   }
 
   handleTouchStart(evt) {
@@ -170,72 +145,72 @@ export default class Build extends Component {
       // }
     }
 
+    if (!this.props.sunPhase) return null;
+
     return (
-      <div className={this.state.bg}>
+      <div id="bgGradient" className={this.state.bg}>
 
-          <div id="click0" onClick={this.toggleMsg('showMsg0')}/>
-          <div id="click1" onClick={this.toggleMsg('showMsg1')}/>
+        <div id="click0" onClick={this.toggleMsg('showMsg0')} />
+        <div id="click1" onClick={this.toggleMsg('showMsg1')} />
 
+        <div id="build0" />
+        <div id="build0b-light" style={{ opacity: this.props.opacity }} className={this.buildMove} />
+        <div id="build0b" className={this.buildMove} />
+        <div id="build0c" />
+        <div id="build01" />
+        <div id="build02" />
 
-          <div className="build0" style={{ opacity: this.props.opacity }}>
+        {
+        this.state.showMsg0 &&
+        <div id="hello" style={{ opacity: this.props.opacity }}>
 
-             <div id="build0img-l" />
+          <span className={this.state.textClass}>hi. my name is Alice.
+          </span>
 
-            { this.state.showMsg0 &&
-              <div className="hello">
+        </div>
+        }
 
-                <span className={this.state.textClass}>hi.<br/>
-                my name is Alice.
-                </span>
+        <div id="calico-divsm" onContextMenu={this.handleContextMenu} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} />
 
-              </div>
-            }
+        {
+        this.state.showContextMenu &&
+        <div className="catSay"><span className="text">{this.state.catSays}</span>
+        </div>
+        }
 
+{
+//          <div id="build2img" style={style.build2} />
+
+//          <div id="build2aimg" />
+}
+
+          { this.state.showMsg1 &&
+          <div id="links" style={{ opacity: this.props.opacity }}>
+            <span className={this.state.textClass}>
+                here are some places you can find me:<br />
+                <i className="fa fa-github pad-right-05" aria-hidden="true" /> 
+                <a href="http://www.github.com/sunnythere" target="_blank">github</a><br />
+                <i className="fa fa-linkedin-square pad-right-05" aria-hidden="true" /> 
+                <a href="http://www.linkedin.com/in/yawenalice" target="_blank">linkedin</a><br/>
+                 <i className="fa fa-instagram pad-right-05" aria-hidden="true" /> 
+                 <a href="http://www.instagram.com/hyphenlowercase" target="_blank">instagram</a>
+            </span>
           </div>
-
-          <div className="build0 z2">
-
-            <div id="calico-divsm" onContextMenu={this.handleContextMenu} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd}/>
-
-            { this.state.showContextMenu &&
-              <div className="catSay"><span className="text">{this.state.catSays}</span></div>
-            }
-
-            <div id="build0img" />
-
-             { this.state.showMsg1 &&
-               <div className="links">
-                 <span className={this.state.textClass}>
-                 some places you can find me:<br />
-                   <i className="fa fa-github" aria-hidden="true" /> <a href="http://www.github.com/sunnythere">github</a><br />
-                   <i className="fa fa-linkedin-square" aria-hidden="true" /> <a href="http://www.linkedin.com/in/yawenalice">linkedin</a><br/>
-                   <i className="fa fa-instagram" aria-hidden="true" /> <a href="http://www.instagram.com/hyphenlowercase">instagram</a>
-                 </span>
-               </div>
-             }
-
-          </div>
+          }
 
 
-          <div id="build2img" style={style.build2}/>
-          <div id="build2aimg" />
-
-
-          <div id="infostar"><a onClick={this.toggleMsg('showInfo')} className="nostylelink">*</a>
-
+          <div id="infostar">
+            <a onClick={this.toggleMsg('showInfo')} className="nostylelink">*</a>
               { this.state.showInfo &&
-                 <div id="infobubble">
-                 * The cityscape cutouts were created from pages of a 2010 edition (the Work issue) of one of my favorite periodicals, <a href="https://www.good.is/" className="darkgrey">Good Magazine</a>. I had it laying around. Because apparently I am sometimes a hoarder.
+              <div id="infobubble">
+                 * The cityscape cutouts were created from pages of a 2010 edition (the Work issue) of one of my favorite periodicals, <a href="https://www.good.is/" className="darkgrey">Good Magazine</a>.
                  <br />
                  * The background gradient uses <a href="https://sunrise-sunset.org/api" className="darkgrey">the sunrise and sunset API</a>.
                  <br />
-                 * Things are still changing and moving...
-                 <br />
                  <span className="bottom">--> hyphenlowercase at gmail</span>
-                 </div>
-               }
-             </div>
-
+              </div>
+              }
+          </div>
 
       </div>
 
