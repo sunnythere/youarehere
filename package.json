@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "build": "wp --mode development",
-    "build-w": "wp --mode development -w",
     "build-prod": "wp --mode production"
   },
   "author": "y.alice",

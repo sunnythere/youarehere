@@ -15,7 +15,7 @@ export const getAstroInfo = (today) => {
     .then(res => {
       const { data } = res;
       if (data.status === "OK") {
-      // console.log(res.data)
+      console.log(res.data)
         /* results:
           {
             astronomical_twilight_begin: "2017-04-19T08:29:12+00:00",
@@ -56,4 +56,50 @@ export const getAstroInfo = (today) => {
       return possiblePhase[0];
     }
   })
+}
+
+export const gradientSwitchCase = (sunPhase) => {
+  switch (sunPhase) {
+    case 'astronomical_twilight_begin':
+      return {
+        bg: 'yellowBlue',
+        reverse: true,
+      };
+    case 'nautical_twilight_begin':
+      return {
+        bg: 'yellowBlue',
+        reverse: true,
+      };
+    case 'civil_twilight_begin':
+      return {
+        bg: 'yellowPink',
+        reverse: true,
+      };
+    case 'sunrise':
+      return {
+        bg: 'blueYellow',
+      };
+    case 'sunset':
+      return {
+        bg: 'pinkYellow',
+      };
+    case 'civil_twilight_end':
+      return {
+        bg: 'darkBlue',
+      };
+    case 'nautical_twilight_end':
+      return {
+        bg: 'darkBlue',
+      };
+    case 'astronomical_twilight_end':
+      return {
+        bg: 'darkBlueRev',
+        reverse: true,
+      };
+    default:
+      return {
+        bg: 'blueYellow',
+      };
+  }
+
 }

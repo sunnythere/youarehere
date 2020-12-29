@@ -9,8 +9,8 @@ https://sunnythere.com
 `firebase serve`
 
 ## uses
-react
-firebase
+* react
+* firebase
 
 
 
