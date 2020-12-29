@@ -1,18 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import moment from 'moment'
-import { BrowserRouter, Route } from 'react-router-dom'
-import Enter from './components/Enter'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Enter from './components/Enter';
+import Scrolly from './components/Scrolly';
 
 ReactDOM.render(
   <BrowserRouter>
-      <Route path='/' component={Enter} >
-      {
-        // <IndexRedirect to="/build" />
-        // <Route path="/build" component={Scroll1} onEnter={onBuildEnter} />
-      }
-      </Route>
+    <Switch>
+      <Route exact path="/" component={Enter} />
+      <Route path="/scrolly" component={Scrolly} />
+    </Switch>
   </BrowserRouter>,
-document.getElementById('youarehere')
-)
-
+  document.getElementById('youarehere')
+);

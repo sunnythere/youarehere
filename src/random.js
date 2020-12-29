@@ -1,6 +1,4 @@
-
 // to get random integer from 0 and num
-export const randomInt = function(num) {
+export const randomInt = num =>
   //num = number of ints you want
-  return Math.floor(Math.random() * (num + 1))
-}
+  Math.floor(Math.random() * (num + 1))

@@ -1,9 +1,15 @@
-# ignore node_modules
+# dependency files
 node_modules
 
-# webpack compilation
-public/bundle.js
-public/bundle.js.map
+# compilation
+public
 
-# npm errors
+# errors
 npm-debug.log
+firebase-debug.log
+
+**/.DS_Store
+.firebase/*
+
+notes
+oldimg
