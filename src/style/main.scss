@@ -23,7 +23,8 @@ body {
 a, .white {
   color: #efefef;
 }
-a.nostylelink:hover {
+a.nostylelink:hover,
+.click {
   cursor: pointer;
 }
 .nostylelink {
@@ -51,78 +52,8 @@ a.nostylelink:hover {
   overflow: hidden;
 }
 
-
-
-#build0b {
-  height: 250px;
-  width: 208px;
-  position: fixed;
-  bottom: 0px;
-  left: 55px;
-  box-sizing: border-box;
-  background-image: url('../img/build0b-sm.png');
-  background-size: 208px 250px;
-  overflow: hidden;
-  z-index: 2;
-  transition: all .3s ease-in-out;
-}
-#build0b-light {
-  height: 250px;
-  width: 208px;
-  position: fixed;
-  bottom: 0px;
-  left: 55px;
-  box-sizing: border-box;
-  background-image: url('../img/build0b-light-md.png');
-  background-size: 208px 250px;
-  overflow: hidden;
-  z-index: 3;
-  transition: all .3s ease-in-out;
-}
 .moveLeft {
   transform: translateX(205px);
-}
-
-#build0c {
-  height: 250px;
-  width: 106px;
-  position: fixed;
-  bottom: 0px;
-  left: 265px;
-  box-sizing: border-box;
-  background-image: url('../img/build0c-sm.png');
-  background-size: 106px 250px;
-  overflow: hidden;
-  z-index: 3;
-}
-#build01 {
-  height: 250px;
-  width: 204px;
-  position: fixed;
-  bottom: 0px;
-  left: 251px;
-  box-sizing: border-box;
-  background-image: url('../img/build01-sm.png');
-  background-size: 204px 250px;
-  overflow: hidden;
-  z-index: 2;
-}
-
-// #build2img {
-//   display: inline-block;
-//   height: 190px;
-//   width: 162px;
-//   position: relative;
-//   bottom: calc(-200vh + 190px);
-//   left: 33px;
-//   box-sizing: border-box;
-//   background-image: url('../img/build2sm.png');
-//   background-size: 162px 190px;
-//   background-repeat: no-repeat;
-//   overflow: hidden;
-// }
-#build2aimg {
-  display: none;
 }
 
 #click0 {
@@ -144,17 +75,17 @@ a.nostylelink:hover {
   z-index: 5;
 }
 #hello {
-  position: absolute;
+  position: fixed;
   display: inline-block;
-  top: 110%;
+  top: 10%;
   left: 10%;
   z-index: 4;
 }
 #links {
   width: 70%;
-  position: absolute;
+  position: fixed;
   display: inline-block;
-  top: 120%;
+  top: 20%;
   left: 15%;
   z-index: 4;
 }
@@ -221,17 +152,40 @@ a.nostylelink:hover {
   z-index: 10;
 }
 #infobubble {
-  height: 140px;
+  background: white;
+  border-radius: 10px;
   width: 200px;
   position: fixed;
   bottom: 55px;
   right: 30px;
-  padding: 8px 12px 0px 10px;
+  padding: 8px 10px 6px;
   box-sizing: border-box;
   z-index: 10;
-  background-image: url('../img/speech.min.svg');
   font-size: 1.2rem;
+  animation: pop 0.3s ease-out 1;
 }
+.bubble {
+  background: white;
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+  content: "";
+  display: block;
+  position: absolute;
+}
+@keyframes pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+#infobubble::after {
+  @extend .bubble;
+  right: 30px;
+  top: 72px;
+  box-shadow: 12px 18px white,
+              32px 22px white;
+}
+
 .darkgrey {
   color: #555555;
 }
@@ -243,82 +197,22 @@ a.nostylelink:hover {
   display: inline;
 }
 
-
-
-@media screen and (min-device-pixel-ratio: 1.5) {
-/*  #build0img {
-    background-image: url('../img/build0md2.png');
-  }
-  #build2img {
-    background-image: url('../img/build2md.png');
-  }
-  #build2aimg {
-    background-image: url('../img/build2amd.png');
-  }*/
-  #build0a {
-    background-image: url('../img/build0a-md.png');
-  }
-  #build0b {
-    background-image: url('../img/build0b-md.png');
-  }
-  #build0c {
-    background-image: url('../img/build0c-md.png');
-  }
-  #build01 {
-    background-image: url('../img/build01-md.png');
-  }
-  #build02 {
-    background-image: url('../img/build02-md.png');
-  }
-  #build0b-light {
-    background-image: url('../img/build0b-light-md.png');
-  }
-}
-
 @media screen and (max-width: 600px) and (orientation: landscape) {
   .hello {
-    top: 110%;
+    top: 10%;
   }
   .links {
-    top: 120%
+    top: 20%
   }
 }
 
-@media all and (min-width: 480px) {
-  #build02 {
-    height: 250px;
-    width: 144px;
-    position: fixed;
-    bottom: 0px;
-    left: 450px;
-    box-sizing: border-box;
-    background-image: url('../img/build02-sm.png');
-    background-size: 144px 250px;
-    overflow: hidden;
-    z-index: 1;
-  }
-}
 @media all and (min-width: 600px) {
-  // #build2aimg {
-  //   display: inline;
-  //   height: 122px;
-  //   width: 160px;
-  //   position: absolute;
-  //   bottom: -100%;
-  //   left: 345px;
-  //   box-sizing: border-box;
-  //   background-image: url('../img/build2asm.png');
-  //   background-size: 160px 122px;
-  //   background-repeat: no-repeat;
-  //   overflow-x: hidden;
-  //   z-index: 2;
-  // }
   .hello {
-    top: 120%;
+    top: 20%;
     left: 15%;
   }
   .links {
-    top: 130%;
+    top: 30%;
     left: 20%;
   }
 }

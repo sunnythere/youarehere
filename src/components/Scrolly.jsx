@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import { getAstroInfo } from '../astro'
+import { getAstroInfo } from '../sky/astro'
 
 
 export default class Scrolly extends Component {

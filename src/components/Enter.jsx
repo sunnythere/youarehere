@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import Build from './Build';
-import { getAstroInfo } from '../astro';
-
+import { getAstroInfo, gradientSwitchCase } from '../sky/astro';
 
 export default class Enter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sunPhase: null,
       opacity: 0,
       yCoor: 0,
+      bg: ''
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    this.setBackground = this.setBackground.bind(this);
   }
 
   componentDidMount() {
@@ -21,48 +21,47 @@ export default class Enter extends Component {
 
     const today = moment().format("YYYY-MM-DD");
     getAstroInfo(today)
-      .then((sunPhase) => this.setState({ sunPhase: sunPhase }));
+      .then(sunPhase => this.setBackground(sunPhase));
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  setBackground(sunPhase) {
+    const { bg, reverse } = gradientSwitchCase(sunPhase);
+    this.setState({
+      bg: ['buildBG', bg].join(' '),
+      reverse,
+      opacity: reverse ? 1 : 0,
+    });
+  }
+
   handleScroll(evt) {
     evt.preventDefault();
     evt.stopPropagation();
-    let y = evt.target.body.scrollTop || evt.target.documentElement.scrollTop;
-console.log({ y})
+    const y = evt.target.body.scrollTop || evt.target.documentElement.scrollTop;
     //srcElement deprecated; target.documentElement for Firefox, target.body for Chrome
-    let lowerBound = (window.innerHeight);
-    let opacity;
-console.log('lower than lowerbound', y < lowerBound)
-    // if (y < lowerBound) {
-      opacity = y/lowerBound;
-    //   if (y === 0) {
-    //     evt.target.body.scrollTop = 1;
-    //   }
-    // } else {
-    //   opacity = 1
-    //   if (y === window.innerHeight) {
-    //     evt.target.body.scrollTop -= 1;
-    //   }
-    // }
+
+    const lowerBound = (window.innerHeight);
+    const opacity = this.state.reverse ?
+      1 - y/lowerBound : y/lowerBound
 
     this.setState({
-      opacity: opacity,
+      opacity,
       yCoor: y,
     })
   }
 
   render() {
     return (
-      <div id="container">
+      <div id="bgGradient" className={this.state.bg}>
         <Build
-          sunPhase={this.state.sunPhase}
           handleScroll={this.handleScroll}
           opacity={this.state.opacity}
           yCoor={this.state.yCoor}
+          reverse={this.state.reverse}
+          bg={this.state.bg}
         />
       </div>
     );
